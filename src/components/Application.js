@@ -8,6 +8,8 @@ import Header from './Header'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
+import Dashboard from './dashboard/Dashboard'
+
 import { UserContext } from '../providers/UserProvider'
 
 const styles = {
@@ -53,9 +55,7 @@ const muiTheme = getMuiTheme()
 function Application() {
   const user = useContext(UserContext)
   return user ? (
-    <MuiThemeProvider muiTheme={muiTheme}>
-      <UserHomepage />
-    </MuiThemeProvider>
+    <Dashboard />
   ) : (
     <Router>
       <SignUp path="signUp" />
