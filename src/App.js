@@ -1,12 +1,19 @@
-import React from "react";
+import React from 'react'
+import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import Link from '@material-ui/core/Link'
+import Application from './components/Application'
+import UserProvider from './providers/UserProvider'
+import Header from './components/Header'
 
 function App() {
   return (
-    <div className="flex flex-col w-3/4 mx-auto my-12 items-center">
-      <h1>cool page</h1>
-      {/* <Button onClick={() => console.log("click")}>I am Button</Button> */}
-    </div>
-  );
+    <UserProvider>
+      <Header />
+      <Application />
+    </UserProvider>
+  )
 }
 
-export default App;
+export default App

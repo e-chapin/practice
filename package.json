@@ -3,15 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "add": "^2.0.6",
+    "firestorter": "^3.0.1",
+    "material-ui": "^0.20.2",
+    "mobx": "^6.0.4",
+    "mobx-persist": "^0.4.1",
+    "mobx-react": "^7.0.5",
+    "mobx-react-form": "^3.0.0",
     "postcss-import": "^14.0.0",
     "postcss-nested": "^5.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-firebase-hooks": "^2.2.0",
+    "react-flip-move": "^3.0.4",
     "react-scripts": "4.0.1",
+    "valid-url": "^1.0.9",
+    "validatorjs": "^3.22.1",
     "web-vitals": "^0.2.4",
     "yarn": "^1.22.10"
   },
@@ -43,11 +54,17 @@
     ]
   },
   "devDependencies": {
+    "@reach/router": "^1.3.4",
     "@tailwindcss/postcss7-compat": "^2.0.2",
+    "@types/reach__router": "^1.3.6",
     "autoprefixer": "^9.0.0",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "firebase": "^8.2.1",
     "postcss": "^8",
     "postcss-cli": "^8.3.1",
+    "prettier": "^2.2.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }
