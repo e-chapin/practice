@@ -10,7 +10,7 @@ import Header from './components/Header'
 function App() {
   return (
     <UserProvider>
-      <Header />
+      {/* <Header /> */}
       <Application />
     </UserProvider>
   )

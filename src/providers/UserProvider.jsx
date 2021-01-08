@@ -6,6 +6,7 @@ import { Collection, Document } from 'firestorter'
 
 export const UserContext = createContext({ user: null})
 
+
 // const users = new Collection('users');
 
 class UserProvider extends Component {
@@ -22,7 +23,6 @@ class UserProvider extends Component {
                 email: userAuth.email,
                 fullname: userAuth.displayName,
             }, {merge: true});
-            console.log(usr)
         })
     }
 
