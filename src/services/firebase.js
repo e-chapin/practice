@@ -32,11 +32,3 @@ export const signInWithGoogle = () => {
     console.log(result.user)
   })
 }
-
-const getTodos = () => {
-  user = this.props
-  const todos = new Collection('users/' + user.uid + '/topics')
-  return todos
-}
-
-export { getTodos }
