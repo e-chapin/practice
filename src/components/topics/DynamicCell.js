@@ -20,6 +20,30 @@ export const EditCell = ({ rowData, dataKey, onChange, ...props }) => {
   )
 }
 
+export const EditCheckboxCell = ({ rowData, dataKey, onChange, ...props }) => {
+  const editing = rowData.status === 'EDIT'
+  return (
+    <Cell {...props} className={editing ? 'table-content-editing' : ''}>
+      {editing ? (
+        <input
+          type="checkbox"
+          className="rs-input"
+          checked={rowData[dataKey] == true ? 'checked' : ''}
+          onChange={(event) => {
+            onChange && onChange(rowData.id, dataKey, !rowData[dataKey])
+          }}
+        />
+      ) : (
+        <input
+          type="checkbox"
+          readOnly="true"
+          checked={rowData[dataKey] == true ? 'check' : ''}
+        />
+      )}
+    </Cell>
+  )
+}
+
 export const ActionCell = ({ rowData, dataKey, onClick, ...props }) => {
   return (
     <Cell {...props} style={{ padding: '6px 0' }}>

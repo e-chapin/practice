@@ -4,7 +4,7 @@ import 'rsuite-table/dist/css/rsuite-table.css'
 
 import Title from '../dashboard/Title'
 import { firestore } from '../../services/firebase'
-import { ActionCell, EditCell } from './DynamicCell'
+import { ActionCell, EditCell, EditCheckboxCell } from './DynamicCell'
 import { UserContext } from '../../providers/UserProvider'
 
 const TopicList = () => {
@@ -29,8 +29,14 @@ const TopicList = () => {
     setTopics(nextData)
   }
 
+  const handleCheckboxChange = (id, key, value) => {
+    const nextData = Object.assign([], topics)
+    var item = nextData.find((item) => item.id === id)
+    item[key] = !item[key]
+    setTopics(nextData)
+  }
+
   const handleEditState = (id) => {
-    console.log('handleEditState', id)
     const nextData = Object.assign([], topics.slice())
     const activeItem = nextData.find((item) => item.id === id)
     if (activeItem.status == 'EDIT') {
@@ -38,7 +44,7 @@ const TopicList = () => {
       delete toSave.status
       delete toSave.id
       firestore
-        .doc('users/' + user.uid + '/topics/' + activeItem.id)
+        .doc('users/' + user.uid + '/topics/' + id)
         .update(toSave, { merge: true })
       activeItem.status = null
     } else {
@@ -69,7 +75,7 @@ const TopicList = () => {
 
           <Column width={300}>
             <HeaderCell>Active</HeaderCell>
-            <EditCell dataKey="active" onChange={handleChange} />
+            <EditCheckboxCell dataKey="active" onChange={handleCheckboxChange} />
           </Column>
 
           <Column flexGrow={1}>
