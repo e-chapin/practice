@@ -1,37 +1,49 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { Table, Column, HeaderCell, Cell } from 'rsuite-table'
 import 'rsuite-table/dist/css/rsuite-table.css'
 
 import Title from '../dashboard/Title'
 import { firestore } from '../../services/firebase'
-import { ActionCell, EditCell } from './EditCell'
+import { ActionCell, EditCell } from './DynamicCell'
 import { UserContext } from '../../providers/UserProvider'
 
 const TopicList = () => {
   const user = useContext(UserContext)
-  const [topics, setTopics] = useState({})
+  const [topics, setTopics] = useState([])
 
   useEffect(() => {
     firestore
       .collection('users/' + user.uid + '/topics')
       .get()
       .then((querySnapshot) => {
-        const data = querySnapshot.docs.map((doc) => doc.data())
-        console.log(data)
+        const data = querySnapshot.docs.map((doc) => {
+          return Object.assign(doc.data(), { id: doc.id, status: null })
+        })
         setTopics(data)
       })
-  })
+  }, [])
 
   const handleChange = (id, key, value) => {
     const nextData = Object.assign([], topics)
     nextData.find((item) => item.id === id)[key] = value
     setTopics(nextData)
   }
+
   const handleEditState = (id) => {
-    const nextData = Object.assign([], topics)
+    console.log('handleEditState', id)
+    const nextData = Object.assign([], topics.slice())
     const activeItem = nextData.find((item) => item.id === id)
-    activeItem.status = activeItem.status ? null : 'EDIT'
+    if (activeItem.status == 'EDIT') {
+      var toSave = activeItem
+      delete toSave.status
+      delete toSave.id
+      firestore
+        .doc('users/' + user.uid + '/topics/' + activeItem.id)
+        .update(toSave, { merge: true })
+      activeItem.status = null
+    } else {
+      activeItem.status = 'EDIT'
+    }
     setTopics(nextData)
   }
 
@@ -57,7 +69,7 @@ const TopicList = () => {
 
           <Column flexGrow={1}>
             <HeaderCell>Active</HeaderCell>
-            <ActionCell dataKey="active" onClick={handleEditState} />
+            <ActionCell dataKey="title" onClick={handleEditState} />
           </Column>
         </Table>
       )}
