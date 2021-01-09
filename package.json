@@ -25,6 +25,8 @@
     "react-flip-move": "^3.0.4",
     "react-scripts": "4.0.1",
     "recharts": "1.8.5",
+    "rsuite": "^4.8.6",
+    "rsuite-table": "^3.14.2",
     "valid-url": "^1.0.9",
     "validatorjs": "^3.22.1",
     "web-vitals": "^0.2.4",
