@@ -39,30 +39,34 @@ const TopicList = () => {
   return (
     <React.Fragment>
       <Title>Topics</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>URL</TableCell>
-            <TableCell>Active</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {topics && (
-            <>
-              {topics.docs.map((doc) => (
-                <Topic uid={user.uid} topic={doc} parentPath={topics.docs.path} />
-              ))}
-            </>
-          )}
-        </TableBody>
-      </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          See more orders
-        </Link>
-      </div>
+      {topics && (
+        <Table height={420} data={topics}>
+          <Column width={200}>
+            <HeaderCell>Title</HeaderCell>
+            <EditCell dataKey="title" onChange={handleChange} />
+          </Column>
+
+          <Column width={200}>
+            <HeaderCell>Description</HeaderCell>
+            <EditCell dataKey="description" onChange={handleChange} />
+          </Column>
+
+          <Column width={300}>
+            <HeaderCell>URL</HeaderCell>
+            <EditCell dataKey="url" onChange={handleChange} />
+          </Column>
+
+          <Column width={300}>
+            <HeaderCell>Active</HeaderCell>
+            <EditCell dataKey="active" onChange={handleChange} />
+          </Column>
+
+          <Column flexGrow={1}>
+            <HeaderCell>Edit</HeaderCell>
+            <ActionCell dataKey="id" onClick={handleEditState} />
+          </Column>
+        </Table>
+      )}
     </React.Fragment>
   )
 }
