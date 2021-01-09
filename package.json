@@ -24,6 +24,7 @@
     "react-firebase-hooks": "^2.2.0",
     "react-flip-move": "^3.0.4",
     "react-scripts": "4.0.1",
+    "react-x-editable": "^0.0.10-beta",
     "recharts": "1.8.5",
     "valid-url": "^1.0.9",
     "validatorjs": "^3.22.1",

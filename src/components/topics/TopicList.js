@@ -52,7 +52,7 @@ const TopicList = () => {
           {topics && (
             <>
               {topics.docs.map((doc) => (
-                <Topic topic={doc} />
+                <Topic uid={user.uid} topic={doc} parentPath={topics.docs.path} />
               ))}
             </>
           )}
