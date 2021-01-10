@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -19,10 +19,8 @@ import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import { mainListItems, secondaryListItems } from './listItems'
-import Chart from './Chart'
-import Deposits from './Deposits'
-import Orders from './Orders'
 import TopicList from '../topics/TopicList'
+import SessionList from '../sessions/SessionList'
 import { UserContext } from '../../providers/UserProvider'
 import { auth, signInWithGoogle } from '../../services/firebase'
 import { useCollection } from 'react-firebase-hooks/firestore'
@@ -124,13 +122,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const user = useContext(UserContext)
-
-  const [docs, loading, error] = useCollection(
-    firebase.firestore().collection('users/' + user.uid + '/topics'),
-    {
-      snapshotListenOptions: { includeMetadataChanges: true },
-    }
-  )
+  const [mainContent, setMainContent] = useState('sessions')
 
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
@@ -141,6 +133,15 @@ const Dashboard = () => {
     setOpen(false)
   }
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+
+  const getMainContent = () => {
+    switch (mainContent) {
+      case 'topics':
+        return <TopicList />
+      case 'sessions':
+        return <SessionList />
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -207,9 +208,7 @@ const Dashboard = () => {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <TopicList />
-              </Paper>
+              <Paper className={classes.paper}>{getMainContent()}</Paper>
             </Grid>
           </Grid>
           <Box pt={4}>
