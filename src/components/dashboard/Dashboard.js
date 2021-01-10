@@ -18,7 +18,7 @@ import Link from '@material-ui/core/Link'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import NotificationsIcon from '@material-ui/icons/Notifications'
-import { mainListItems, secondaryListItems } from './listItems'
+import { MainListItems, secondaryListItems } from './listItems'
 import TopicList from '../topics/TopicList'
 import SessionList from '../sessions/SessionList'
 import { UserContext } from '../../providers/UserProvider'
@@ -132,6 +132,11 @@ const Dashboard = () => {
   const handleDrawerClose = () => {
     setOpen(false)
   }
+
+  const handleNavClick = (content) => {
+    setMainContent(content)
+  }
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
   const getMainContent = () => {
@@ -199,7 +204,7 @@ const Dashboard = () => {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{<MainListItems clickFunc={handleNavClick} />}</List>
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>
