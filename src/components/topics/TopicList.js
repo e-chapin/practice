@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Table, Column, HeaderCell, Cell } from 'rsuite-table'
+import { Button } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
+import { Table, Column, HeaderCell } from 'rsuite-table'
 import 'rsuite-table/dist/css/rsuite-table.css'
 
 import Title from '../dashboard/Title'
@@ -36,6 +38,23 @@ const TopicList = () => {
     setTopics(nextData)
   }
 
+  const handleActions = (id, action) => {
+    if (action == 'edit') {
+      handleEditState(id)
+    } else if (action == 'delete') {
+      handleDelete(id)
+    }
+  }
+
+  const handleDelete = (id) => {
+    const nextData = Object.assign([], topics.slice())
+    const toDelete = nextData.find((item) => item.id === id)
+    firestore.doc('users/' + user.uid + '/topics/' + id).delete()
+    const index = nextData.indexOf(toDelete)
+    nextData.splice(index, 1)
+    setTopics(nextData)
+  }
+
   const handleEditState = (id) => {
     const nextData = Object.assign([], topics.slice())
     const activeItem = nextData.find((item) => item.id === id)
@@ -51,6 +70,25 @@ const TopicList = () => {
       activeItem.status = 'EDIT'
     }
     setTopics(nextData)
+  }
+
+  const handleNewTopic = () => {
+    const newTopic = {
+      title: '',
+      description: '',
+      url: '',
+      active: true,
+      status: 'EDIT',
+    }
+    const nextData = Object.assign([], topics.slice())
+    const newDoc = firestore.collection('users/' + user.uid + '/topics').doc()
+    // debugger
+    // firestore.doc(newDoc.path).update(newTopic, { merge: true })
+    newDoc.set(newTopic)
+    newTopic.id = newDoc.id
+    nextData.push(newTopic)
+    setTopics(nextData)
+    // const activeItem = nextData.find((item) => item.id === id)
   }
 
   return (
@@ -79,11 +117,14 @@ const TopicList = () => {
           </Column>
 
           <Column flexGrow={1}>
-            <HeaderCell>Edit</HeaderCell>
-            <ActionCell dataKey="id" onClick={handleEditState} />
+            <HeaderCell>Actions</HeaderCell>
+            <ActionCell dataKey="id" onClick={handleActions} />
           </Column>
         </Table>
       )}
+      <Button variant="contained" color="primary" onClick={handleNewTopic}>
+        Add New Topic
+      </Button>
     </React.Fragment>
   )
 }

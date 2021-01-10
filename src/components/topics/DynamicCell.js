@@ -1,3 +1,6 @@
+import EditIcon from '@material-ui/icons/Edit'
+import SaveIcon from '@material-ui/icons/Save'
+import DeleteIcon from '@material-ui/icons/Delete'
 import { Cell } from 'rsuite-table'
 import { Button } from 'rsuite'
 
@@ -36,7 +39,7 @@ export const EditCheckboxCell = ({ rowData, dataKey, onChange, ...props }) => {
       ) : (
         <input
           type="checkbox"
-          readOnly="true"
+          readOnly={true}
           checked={rowData[dataKey] == true ? 'check' : ''}
         />
       )}
@@ -45,16 +48,27 @@ export const EditCheckboxCell = ({ rowData, dataKey, onChange, ...props }) => {
 }
 
 export const ActionCell = ({ rowData, dataKey, onClick, ...props }) => {
+  const deleteButton = () => {}
+
   return (
     <Cell {...props} style={{ padding: '6px 0' }}>
       <Button
         appearance="link"
         onClick={() => {
-          onClick && onClick(rowData.id)
+          onClick && onClick(rowData.id, 'edit')
         }}
       >
-        {rowData.status === 'EDIT' ? 'Save' : 'Edit'}
+        {rowData.status === 'EDIT' ? <SaveIcon /> : <EditIcon />}
       </Button>
+      {rowData.status === 'EDIT' && (
+        <Button
+          onClick={() => {
+            onClick && onClick(rowData.id, 'delete')
+          }}
+        >
+          <DeleteIcon />
+        </Button>
+      )}
     </Cell>
   )
 }
