@@ -21,6 +21,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import { MainListItems, secondaryListItems } from './listItems'
 import TopicList from '../topics/TopicList'
 import SessionList from '../sessions/SessionList'
+import StartSession from '../sessions/StartSession'
 import { UserContext } from '../../providers/UserProvider'
 import { auth, signInWithGoogle } from '../../services/firebase'
 import { useCollection } from 'react-firebase-hooks/firestore'
@@ -123,6 +124,7 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = () => {
   const user = useContext(UserContext)
   const [mainContent, setMainContent] = useState('sessions')
+  const [sessionId, setSessionId] = useState()
 
   const classes = useStyles()
   const [open, setOpen] = React.useState(true)
@@ -145,6 +147,8 @@ const Dashboard = () => {
         return <TopicList />
       case 'sessions':
         return <SessionList />
+      case 'start-session':
+        return <StartSession sessionID={sessionId} />
     }
   }
 
