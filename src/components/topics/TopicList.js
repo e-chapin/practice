@@ -8,21 +8,14 @@ import Title from '../dashboard/Title'
 import { firestore } from '../../services/firebase'
 import { ActionCell, EditCell, EditCheckboxCell } from './DynamicCell'
 import { UserContext } from '../../providers/UserProvider'
+import { getTopics } from '../../services/firebase'
 
 const TopicList = () => {
   const user = useContext(UserContext)
   const [topics, setTopics] = useState([])
 
   useEffect(() => {
-    firestore
-      .collection('users/' + user.uid + '/topics')
-      .get()
-      .then((querySnapshot) => {
-        const data = querySnapshot.docs.map((doc) => {
-          return Object.assign(doc.data(), { id: doc.id, status: null })
-        })
-        setTopics(data)
-      })
+    const topics = getTopics(user.uid, setTopics)
   }, [])
 
   const handleChange = (id, key, value) => {

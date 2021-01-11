@@ -32,3 +32,23 @@ export const signInWithGoogle = () => {
     console.log(result.user)
   })
 }
+
+const _getDocs = (path, callback) => {
+  firestore
+    .collection(path)
+    .get()
+    .then((querySnapshot) => {
+      const data = querySnapshot.docs.map((doc) => {
+        return Object.assign(doc.data(), { id: doc.id, status: null })
+      })
+      callback(data)
+    })
+}
+
+export const getTopics = (userId, callback) => {
+  return _getDocs('users/' + userId + '/topics', callback)
+}
+
+export const getSessions = (userId, callback) => {
+  return _getDocs('users/' + userId + '/sessions', callback)
+}
