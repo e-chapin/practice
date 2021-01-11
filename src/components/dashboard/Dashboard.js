@@ -24,6 +24,7 @@ import SessionList from '../sessions/SessionList'
 import StartSession from '../sessions/StartSession'
 import { UserContext } from '../../providers/UserProvider'
 import { auth, signInWithGoogle } from '../../services/firebase'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import firebase from 'firebase'
 
@@ -141,17 +142,6 @@ const Dashboard = () => {
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
-  const getMainContent = () => {
-    switch (mainContent) {
-      case 'topics':
-        return <TopicList />
-      case 'sessions':
-        return <SessionList />
-      case 'start-session':
-        return <StartSession sessionID={sessionId} />
-    }
-  }
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -217,7 +207,17 @@ const Dashboard = () => {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper className={classes.paper}>{getMainContent()}</Paper>
+              <Paper className={classes.paper}>
+                {/* <Route path="/" render={() => <TopicList />} /> */}
+                <Route path="/topics" render={() => <TopicList />} />
+                <Route path="/sessions" render={() => <SessionList />} />
+                <Route
+                  path={'/start-session/:sessionId'}
+                  render={(props) => (
+                    <StartSession sessionId={props.match.params.sessionId} />
+                  )}
+                />
+              </Paper>
             </Grid>
           </Grid>
           <Box pt={4}>

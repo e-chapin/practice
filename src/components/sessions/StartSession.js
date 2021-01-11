@@ -1,5 +1,5 @@
-const StartSession = (sessionId) => {
-  return <div>Session ID: {sessionId}</div>
+const StartSession = (props) => {
+  return <div>Session ID: {props.sessionId}</div>
 }
 
 export default StartSession

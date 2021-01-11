@@ -9,6 +9,7 @@ import { firestore } from '../../services/firebase'
 import { ActionCell, EditCell, EditCheckboxCell } from '../topics/DynamicCell'
 import { UserContext } from '../../providers/UserProvider'
 import { getSessions } from '../../services/firebase'
+import { StartSessionCell } from './StartCell'
 
 const SessionList = () => {
   const user = useContext(UserContext)
@@ -48,6 +49,10 @@ const SessionList = () => {
           <Column width={200}>
             <HeaderCell>Completed</HeaderCell>
             <EditCheckboxCell dataKey="completed" onChange={handleChange} />
+          </Column>
+          <Column width={200}>
+            <HeaderCell>Start</HeaderCell>
+            <StartSessionCell dataKey="id">Start</StartSessionCell>
           </Column>
         </Table>
       )}

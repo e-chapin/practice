@@ -7,6 +7,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard'
 import ListIcon from '@material-ui/icons/List'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import AssignmentIcon from '@material-ui/icons/Assignment'
+import { Link } from 'react-router-dom'
 
 export const MainListItems = ({ clickFunc, ...props }) => {
   return (
@@ -17,18 +18,22 @@ export const MainListItems = ({ clickFunc, ...props }) => {
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <ListIcon />
-        </ListItemIcon>
-        <ListItemText primary="Topics" onClick={() => clickFunc('topics')} />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <AssessmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sessions" onClick={() => clickFunc('sessions')} />
-      </ListItem>
+      <Link to="/topics">
+        <ListItem button>
+          <ListItemIcon>
+            <ListIcon />
+          </ListItemIcon>
+          <ListItemText primary="Topics" />
+        </ListItem>
+      </Link>
+      <Link to="/sessions">
+        <ListItem button>
+          <ListItemIcon>
+            <AssessmentIcon />
+          </ListItemIcon>
+          <ListItemText primary="Sessions" />
+        </ListItem>
+      </Link>
     </div>
   )
 }
